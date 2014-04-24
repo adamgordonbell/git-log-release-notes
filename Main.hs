@@ -1,5 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE NoMonomorphismRestriction #-}
 
 import Data.Word
 import Data.Time
@@ -33,7 +34,7 @@ import Data.Char
 -------- TYPES --------
 -----------------------
 data Date = Date { year :: Int, month :: Int, day :: Int} deriving (Eq,Show, Data, Typeable)
-data Note = Note { version :: String, date :: Date, description :: String } deriving (Eq,Show, Data, Typeable)
+data Note = Note { version :: Text, date :: Date, description :: Text } deriving (Eq,Show, Data, Typeable)
 
 instance Ord Note where
   n1 <= n2 = date n1 <= date n2
@@ -43,13 +44,13 @@ instance Ord Date where
     <> compare (month d1) (month d2)
     <> compare (day d1) (day d2)
 
-data Notes = Notes { notes :: [Note] } deriving (Data, Typeable)
+data Notes = Notes { notes :: [Note] } deriving (Data, Typeable, Show)
 
 -----------------------
 ------- PARSING -------
 -----------------------
 anyBetween start ends = start *> Data.Attoparsec.Text.takeWhile (not.flip elem ends)
-fromUptoIncl startP endChars = startP *> takeTill (flip elem endChars) <* anyChar
+fromUptoIncl startP endChars = startP *> takeTill (flip elem endChars)
 
 dateParser :: Parser Date
 dateParser = do
@@ -62,20 +63,36 @@ dateParser = do
     Date (read y) (read mm) (read d)
 
 versionParser :: Parser Text
-versionParser = fromUptoIncl (stringCI "(tag: ") "(default))"
+versionParser = fromUptoIncl (stringCI "(tag: ") "("
 
 
 messageParser :: Parser Text
-messageParser = takeTill isEndOfLine
+messageParser = 
+    skipWhile (/= '|') 
+    *> skip (== '|') 
+    *> takeTill isEndOfLine
 
 
-lineParser :: Parser (Date, Text, Text)
-lineParser = do
+noteParser :: Parser Note
+noteParser = do
   d <- dateParser
   string "| "
   v <- versionParser
   s <- messageParser
-  return $ (d,v, s)
+  return $ Note v d s
+
+notesParser :: Parser Notes
+notesParser = liftA Notes $ many $ noteParser <* endOfLine
+
+-- Test Parse
+testDate = print $ parseOnly dateParser "2013-06-30"
+
+testVersion = print $ parseOnly versionParser "(tag: VCH3.0.10.206(default))"
+   
+testNotes = print $ parseOnly notesParser "2014-04-17| (tag: VCH3.0.10.206(default))|Subject Line\n2014-04-17| (tag: VCH3.0.10.206(default))|Subject Line"
+
+
+
 -----------------------
 ------- MERGING -------
 -----------------------
@@ -89,22 +106,30 @@ merge (x:xs) (y:ys) =
      else y : merge (x:xs) ys
 
 
+fromRight (Right a) = a
 
 ----------------------
 -------- MAIN --------
 ----------------------
-main2 = print $ parseOnly dateParser "2013-06-30"
 
-main3 = print $ parseOnly versionParser "(tag: VCH3.0.10.206(default))"
-   
-main = print $ parseOnly lineParser "2014-04-17| (tag: VCH3.0.10.206(default))"
+main = 
+-- printTemplate
+    testNotes
 
-main1 = hastacheFile defaultConfig template context
+printTemplate = hastacheFile defaultConfig template parsedContext
  >>= TL.putStrLn . TE.decodeUtf8 
 
 -- begin example
 template = "note.html"
-context = mkGenericContext $ Notes [
+
+simpleContext = mkGenericContext $ Notes [
     Note { version="VCH3.0.10.217", date= Date 2014 03 02 ,  description = "Added Transfer of data from existing web.configs to new web.configs, this means we can push a new web.config as part of the update."},
     Note { version="VCH3.0.10.217", date= Date 2014 03 01 ,  description = "Added spinner to all ajax requests"}
     ]
+
+parsedContext =   mkGenericContext $ fromRight $ parseOnly notesParser "2014-04-17| (tag: VCH3.0.10.206(default))|Subject Line\n2014-04-17| (tag: VCH3.0.10.206(default))|Subject Line"
+
+----
+-- Todo
+-- Parsing multiple notes not working??
+-- Read from file??
