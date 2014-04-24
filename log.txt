@@ -1,0 +1,11 @@
+2014-04-23| (tag: VCH3.0.10.217(default))|Added Transfer of data from existing web.configs to new web.configs, this means we can push a new web.config as part of the update.
+2014-04-23| (tag: VCH3.0.10.216(default))|adding spinner to all ajax requests
+2014-04-23| (tag: VCH3.0.10.215(default))|Added debug lines for logging support
+2014-04-23| (tag: VCH3.0.10.214(default))|fix paging
+2014-04-23| (tag: VCH3.0.10.213(default))|Fixed issue with exception if SiteBackUp directory didn't exist.
+2014-04-22| (tag: VCH3.0.10.212(default))|Added ability to remove selected backup, with a warning.
+2014-04-22| (tag: VCH3.0.10.211(default))|Changed Backup to subdirectory named after version.
+2014-04-22| (tag: VCH3.0.10.210(default), tag: VCH3.0.10.209(default))|Restore Image files that are customizable during update application.
+2014-04-17| (tag: VCH3.0.10.208(default))|fix website path on Business Licence Details page
+2014-04-17| (tag: VCH3.0.10.207(default))|Property Search : NoResults Page / back button / refactoring
+2014-04-17| (tag: VCH3.0.10.206(default))|remove werid dash (--) Control^f typo
