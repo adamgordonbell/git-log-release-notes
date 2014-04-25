@@ -110,7 +110,7 @@ testDate = print $ parseOnly dateParser "2013-06-30"
 
 testVersion = print $ parseOnly versionParser "(tag: VCH3.0.10.206(default))"
    
-testNotes = print $ parseOnly notesParser2 "2014-04-17| (tag: VCH3.0.10.206(default))|Subject Line\n2014-04-17| (tag: VCH3.0.10.206(default))|Subject Line\n"
+testNotes = print $ parseOnly notesParser "2014-04-17| (tag: VCH3.0.10.206(default))|Subject Line\n2014-04-17| (tag: VCH3.0.10.206(default))|Subject Line\n"
 
 -----------------------
 ------- MERGING -------
@@ -157,8 +157,3 @@ simpleContext = mkGenericContext $ Notes [
     ]
 
 parsedContext =   mkGenericContext $ fromRight $ parseOnly notesParser "2014-04-17| (tag: VCH3.0.10.206(default))|Subject Line\n2014-04-17| (tag: VCH3.0.10.206(default))|Subject Line"
-
-----
--- Todo
--- Parsing multiple notes not working??
--- Read from file??
