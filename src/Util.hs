@@ -4,9 +4,17 @@
 module Util where
 
 import Data
+import qualified Data.Map
 
 merge :: [Note] -> [Note] -> [Note]
-merge = undefined
+merge n1 n2 = fromMap $ Data.Map.union (toMap n1) (toMap n2) 
+
+toMap :: [Note] -> Data.Map.Map Version Note
+toMap notes = Data.Map.fromList $ fmap (\x -> (version x, x)) notes
+
+fromMap :: Data.Map.Map Version Note -> [Note]
+fromMap map = Data.Map.elems map
+
 
 group :: [Note] -> [Group]
 group = undefined
