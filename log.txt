@@ -1,4 +1,0 @@
-2014-04-23| (tag: VCH3.0.10.217(default))|Added Transfer of data from existing web.configs to new web.configs, this means we can push a new web.config as part of the update.
-2014-04-23| (tag: VCH3.0.10.216(default))|adding spinner to all ajax requests
-2014-04-23| (tag: VCH3.0.10.215(default))|Added debug lines for logging support
-2014-04-23| (tag: VCH3.0.10.214(default))|fix paging

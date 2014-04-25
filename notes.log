@@ -1,0 +1,94 @@
+2014-04-23| (tag: VCH3.0.10.218(default), tfs/default, master)|javascript redirect to login if 401 returned from ajax
+2014-04-23| (tag: VCH3.0.10.217(default))|Added Transfer of data from existing web.configs to new web.configs, this means we can push a new web.config as part of the update.
+2014-04-23| (tag: VCH3.0.10.216(default))|adding spinner to all ajax requests
+2014-04-23| (tag: VCH3.0.10.215(default))|Added debug lines for logging support
+2014-04-23| (tag: VCH3.0.10.214(default))|fix paging
+2014-04-23| (tag: VCH3.0.10.213(default))|Fixed issue with exception if SiteBackUp directory didn't exist.
+2014-04-22| (tag: VCH3.0.10.212(default))|Added ability to remove selected backup, with a warning.
+2014-04-22| (tag: VCH3.0.10.211(default))|Changed Backup to subdirectory named after version.
+2014-04-22| (tag: VCH3.0.10.210(default), tag: VCH3.0.10.209(default))|Restore Image files that are customizable during update application.
+2014-04-17| (tag: VCH3.0.10.208(default))|fix website path on Business Licence Details page
+2014-04-17| (tag: VCH3.0.10.207(default))|Property Search : NoResults Page / back button / refactoring
+2014-04-17| (tag: VCH3.0.10.206(default))|remove werid dash (--) Control^f typo
+2014-04-15| (tag: VCH3.0.10.205(default))|do not copy VCH customize files
+2014-04-15| (tag: VCH3.0.10.204(default))|adding missing image to project - CHOSEN
+2014-04-09| (tag: VCH3.0.10.203(default))|Fixed a critical issue with Moneris checks throwing an exception when Moneris isn't active.
+2014-04-09| (tag: VCH3.0.10.202(default))|Fixed an issue with StringsIO recording errors when there are none.
+2014-04-09| (tag: VCH3.0.10.201(default))|Fixed an issue with blank phone/fax numbers being represented by GP as just a string of 0s
+2014-04-09| (tag: VCH3.0.10.200(default))|Fixed a bug with User Defined Text fields not being loaded.
+2014-04-08| (tag: VCH3.0.10.199(default))|Moneris labels were mistakenly place inside a panel they didn't belong to and weren't accessible.
+2014-04-07| (tag: VCH3.0.10.198(default))|Adjust category box width to auto, unless it is on lowest resolution then it will be 100%
+2014-04-04| (tag: VCH3.0.10.197(default))|Recover customizations lost during backout operation
+2014-04-04| (tag: VCH3.0.10.196(default))|Removed old ninject version from Unit Tests project so it doesn't keep coming back with each build.
+2014-04-04| (tag: VCH3.0.10.195(default))|Recommit only changes needed for Morinville customizations, reverted to remove inadvertant squash of ninject packages.
+2014-04-03| (tag: VCH3.0.10.194(default))|Added some additional Morinville specific files to the customizations folder
+2014-04-03| (tag: VCH3.0.10.193(default))|add methods back that were dropped from global.asax
+2014-04-01| (tag: VCH3.0.10.192(default))|ninject refactor / password auto complete off / fix db connection logging
+2014-03-31| (tag: VCH3.0.10.191(default))|Merge remote-tracking branch 'refs/remotes/tfs/default'
+2014-03-27| (tag: VCH3.0.10.190(default))|performance improvements to error page and other settings reading
+2014-03-27| (tag: VCH3.0.10.189(default))|cached settings reading - for performance reasons - it cuts down on WS calls on error page specifically
+2014-03-27| (tag: VCH3.0.10.188(default))|Update icons in search template to be Font-Awesome icons
+2014-03-27| (tag: VCH3.0.10.187(default))|No selected subdivision sent as empty string so it will not be included in the query and return all subdivisions.
+2014-03-26| (tag: VCH3.0.10.186(default))|Property Search Fix for LINC Number and Subdivision
+2014-03-26| (tag: VCH3.0.10.185(default))|Refactored exception message into private variable
+2014-03-26| (tag: VCH3.0.10.184(default))|Setup App - change to throw exception when connection test fails. Display exception information to the GUI.
+2014-03-25| (tag: VCH3.0.10.183(default))|Gender no longer a property of GlobalTypes, fixed syntax.
+2014-03-25| (tag: VCH3.0.10.182(default))|SetupApp - fixed validation check
+2014-03-24| (tag: VCH3.0.10.181(default))|Disallow payment if rabies is expired and disallow payment option is selected.
+2014-03-21| (tag: VCH3.0.10.180(default), tag: VCH3.0.10.179(default), tag: VCH3.0.10.178(default))|Added check to mycity page that further validates rabies expiry rules prior to drawing the pay button
+2014-03-20| (tag: VCH3.0.10.177(default))|remove redundant account check
+2014-03-20| (tag: VCH3.0.10.176(default))|Various Enum Refactoring - including fix account Type flag
+2014-03-20| (tag: VCH3.0.10.175(default))|Setup
+2014-03-19| (tag: VCH3.0.10.174(default))|remove some blank lines
+2014-03-18| (tag: VCH3.0.10.173(default))|removing unused results layout - not needed by new paging process
+2014-03-18| (tag: VCH3.0.10.172(default))|Add security around utility bill viewing
+2014-03-18| (tag: VCH3.0.10.171(default))|fix tab order on log in page
+2014-03-18| (tag: VCH3.0.10.170(default))|dl400 insert uses dynamic sql to get around sql parser
+2014-03-18| (tag: VCH3.0.10.169(default))|hbs path var supports root path
+2014-03-17| (tag: VCH3.0.10.168(default))|Merge remote-tracking branch 'refs/remotes/tfs/default'
+2014-03-14| (tag: VCH3.0.10.167(default))|adding nuget ref for mvc to datacontracts
+2014-03-14| (tag: VCH3.0.10.166(default))|Tax Cert paging in place (and js paging cleaned up)
+2014-03-14| (tag: VCH3.0.10.165(default))|Welcome Page Option - pages now read from the setting to determine where the sign in link will go.
+2014-03-13| (tag: VCH3.0.10.164(default))|UX Tweak to Sign In Page
+2014-03-12| (tag: VCH3.0.10.163(default))|Icon Conversion
+2014-03-12| (tag: VCH3.0.10.162(default))|Permit Taxroll Search - uses js based templates paging
+2014-03-11| (tag: VCH3.0.10.161(default))|Customer profile icons converted
+2014-03-11| (tag: VCH3.0.10.160(default))|Customizations for Yellowknife to reduce the font size of the contact us and subsequent paragraph.
+2014-03-11| (tag: VCH3.0.10.159(default))|Require customer key for service layer methods relating to notifications so that only messaged for the currently logged in user can be affected. Prevents unauthorized access.
+2014-03-11| (tag: VCH3.0.10.158(default))|Message Center : refactor js calls in message center to call from page
+2014-03-07| (tag: VCH3.0.10.157(default))|add toolkit
+2014-03-07| (tag: VCH3.0.10.156(default))|Remove "You read this message" alert when marking the message as Unread
+2014-03-07| (tag: VCH3.0.10.155(default))|Nav bar message centre icon now glows / doesn't glow according to which Mark All button was pressed.
+2014-03-07| (tag: VCH3.0.10.154(default))|Merge remote-tracking branch 'refs/remotes/tfs/default'
+2014-03-06| (tag: VCH3.0.10.153(default))|refactored Paging:
+2014-03-06| (tag: VCH3.0.10.152(default))|Removed console "new line" commands from Password Reminder email.
+2014-03-06| (tag: VCH3.0.10.151(default))|Protect the Notification Test page behind the prototype key.
+2014-03-06| (tag: VCH3.0.10.150(default))|add notifications.hbs as a content type
+2014-03-06| (tag: VCH3.0.10.149(default))|Added success or fail feedback on creating a new notification
+2014-03-06| (tag: VCH3.0.10.148(default))|fix css file not being included
+2014-03-04| (tag: VCH3.0.10.146(default), tfs/default)|paging
+2014-03-04| (tag: VCH3.0.10.145(default))|rename adderssId to addressId in customerkey
+2014-02-26| (tag: VCH3.0.10.128(default))|Refactor Notifications to be compatible with new view engine
+2014-02-25| (tag: VCH3.0.10.127(default))|add bundler and split out js files
+2014-02-25| (tag: VCH3.0.10.126(default))|pet lic expiry check moved over to controller
+2014-02-24| (tag: VCH3.0.10.125(default))|Merge remote-tracking branch 'refs/remotes/tfs/default'
+2014-02-24| (tag: VCH3.0.10.124(default))|MVC c# controllers ( and partial pet license utilization )
+2014-02-24| (tag: VCH3.0.10.123(default))|add missing mvc ref
+2014-02-24| (tag: VCH3.0.10.118(default))|fix carousel background image
+2014-02-20| (tag: VCH3.0.10.113(default))|add carousel background images to project
+2014-02-20| (tag: VCH3.0.10.111(default))|Message Centre UX Prototype (Non-functional)
+2014-02-20| (tag: VCH3.0.10.147(default), tag: VCH3.0.10.110(default))|2013 solution - should be backwards compatible
+2014-02-19| (tag: VCH3.0.10.108(default))|fix firefox carousel image problem
+2014-02-18| (tag: VCH3.0.10.107(default))|Gender Fix for Animal search and invoice inquiry.
+2014-02-13| (tag: VCH3.0.10.104(default))|fix 0 items showing on receipt
+2014-02-13| (tag: VCH3.0.10.103(default))|fix animal license posting behavior
+2014-02-13| (tag: VCH3.0.10.102(default))|Put a max length on user defined fields for strings that have restrictions to prevent hard breaks on save.
+2014-02-12| (tag: VCH3.0.10.100(default))|Merge remote-tracking branch 'refs/remotes/tfs/default'
+2014-02-12| (tag: VCH3.0.10.99(default))|petlicence comes in as active
+2014-02-11| (tag: VCH3.0.10.97(default))|permitting statues fix for setup app
+2014-02-11| (tag: VCH3.0.10.96(default))|Merge remote-tracking branch 'refs/remotes/tfs/default'
+2014-02-11| (tag: VCH3.0.10.95(default))|animal license code handles null balance
+2014-02-10| (tag: VCH3.0.10.93(default))|Merge remote-tracking branch 'refs/remotes/tfs/default'
+2014-02-10| (tag: VCH3.0.10.92(default))|reset assembly numbers
+
+

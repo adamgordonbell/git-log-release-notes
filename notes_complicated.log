@@ -1,0 +1,6 @@
+2014-04-23| (HEAD, tag: VCH3.0.10.218(default), tfs/default, master)|javascript redirect to login if 401 returned from ajax
+2014-03-21| (tag: VCH3.0.10.180(default), tag: VCH3.0.10.179(default), tag: VCH3.0.10.178(default))|Added check to mycity page that further validates rabies expiry rules prior to drawing the pay button
+2014-03-04| (tag: VCH3.0.10.146(default), tfs/default)|paging
+2014-02-24||On master: Controllers class
+2014-02-24||untracked files on master: f46499a basics of mvc ajx call in place for pet licence
+2011-06-27||renaming dev folder (branch) to main to beter indicate it shouls be the main or trunk branch
