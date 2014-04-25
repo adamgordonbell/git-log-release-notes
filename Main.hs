@@ -22,13 +22,13 @@ import Network.HTTP.Conduit
 
 import Text.Hastache 
 import Text.Hastache.Context 
-import qualified Data.Text.Lazy as TL1 
 import qualified Data.Text.Lazy.IO as TL 
 import Data.Text.Lazy.Encoding as TE
 import Data.Data 
 import Data.Generics 
 import Data.Char
-import Control.Monad
+
+
 
 -----------------------
 -------- TYPES --------
@@ -45,27 +45,6 @@ instance Ord Date where
     <> compare (day d1) (day d2)
 
 data Notes = Notes { notes :: [Note] } deriving (Data, Typeable, Show)
-
-----------------------
-------- FILES --------
-----------------------
-
-data File = URL String | Local FilePath
-
--- | Files where the logs are stored.
---   Modify this value to read logs from
---   other sources.
-logFiles :: [File]
-logFiles =
-  [ Local "log.txt"
-    ]
-
-getFile :: File -> IO Text
--- simpleHttp gets a lazy bytestring, while we
--- are using strict bytestrings.
-getFile (URL str) = TL1.toStrict . TE.decodeUtf8 <$> simpleHttp str
-getFile (Local fp) = TL1.toStrict <$> TL.readFile fp
-
 
 -----------------------
 ------- PARSING -------
@@ -102,15 +81,19 @@ noteParser = do
   s <- messageParser
   return $ Note v d s
 
-notesParser :: Parser [Note]
-notesParser = many1 $ noteParser <* endOfLine
+notesParser :: Parser Notes
+notesParser = liftA Notes $ many $ noteParser <* endOfLine
+
+notesParser2 = liftA Notes $ many noteParser 
 
 -- Test Parse
 testDate = print $ parseOnly dateParser "2013-06-30"
 
 testVersion = print $ parseOnly versionParser "(tag: VCH3.0.10.206(default))"
    
-testNotes = print $ parseOnly notesParser "2014-04-17| (tag: VCH3.0.10.206(default))|Subject Line\n2014-04-17| (tag: VCH3.0.10.206(default))|Subject Line\n"
+testNotes = print $ parseOnly notesParser2 "2014-04-17| (tag: VCH3.0.10.206(default))|Subject Line\n2014-04-17| (tag: VCH3.0.10.206(default))|Subject Line\n"
+
+
 
 -----------------------
 ------- MERGING -------
@@ -133,17 +116,7 @@ fromRight (Right a) = a
 
 main = 
 -- printTemplate
---    testNotes
-    fileMain
-
-fileMain = do
-  files <- mapM getFile logFiles
-  let
-      logs :: Notes
-      logs = Notes $ join $ rights $ fmap (parseOnly notesParser) files
-      context =  mkGenericContext logs
-  x <- hastacheFile defaultConfig template context 
-  TL.putStrLn . TE.decodeUtf8 $ x
+    testNotes
 
 printTemplate = hastacheFile defaultConfig template parsedContext
  >>= TL.putStrLn . TE.decodeUtf8 
@@ -157,3 +130,8 @@ simpleContext = mkGenericContext $ Notes [
     ]
 
 parsedContext =   mkGenericContext $ fromRight $ parseOnly notesParser "2014-04-17| (tag: VCH3.0.10.206(default))|Subject Line\n2014-04-17| (tag: VCH3.0.10.206(default))|Subject Line"
+
+----
+-- Todo
+-- Parsing multiple notes not working??
+-- Read from file??
