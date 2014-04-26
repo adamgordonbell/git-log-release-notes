@@ -1,37 +1,21 @@
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE NoMonomorphismRestriction #-}
 module Parse where
-import Data.Word
-import Data.Time
 import Data.Attoparsec.Text
 import Data.Attoparsec.Combinator
 import qualified Data.Attoparsec.Text as Parse
 import qualified Data.Attoparsec.Combinator as Parse 
 import qualified Data.Attoparsec.ByteString.Char8 as BParse
 import Control.Applicative
-import Data.Either (rights)
-import Data.Monoid hiding (Product)
-import Data.String
-import Data.Foldable (foldMap)
 import Data.Text as T
 -- ByteString stuff
-import Data.ByteString.Char8 (ByteString,singleton)
-import qualified Data.ByteString as B
-import qualified Data.ByteString.Char8 as BC
-import Data.ByteString.Lazy (toChunks)
 
 import Text.Hastache 
 import Text.Hastache.Context 
 import qualified Data.Text.Lazy 
 import qualified Data.Text.Lazy.IO
-import Data.Text.Lazy.Encoding as TE
-import Data.Data 
-import Data.Generics 
-import Data.Char
+import Data.Text.Lazy.Encoding as TE 
 import Control.Monad
-import Data.Map
-import qualified Data.Map as Map
 
 import Data
 
