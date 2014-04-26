@@ -1,9 +1,12 @@
-Start
+
 {{#groups}}
+<h3>
 Virtual City Hall Builds {{from.major}}.{{from.minor}}.{{from.build}}.{{from.revision}} to {{to.major}}.{{to.minor}}.{{to.build}}.{{to.revision}}
- Changes:
+</h3>
+ <b>Changes:</b>
+ <ul>
 {{#notes}}
-    {{description}}  ({{version.major}}.{{version.minor}}.{{version.build}}.{{version.revision}}  built {{date.year}}-{{date.month}}-{{date.day}}) 
+    <li>{{description}}  <i>({{version.major}}.{{version.minor}}.{{version.build}}.{{version.revision}}  built {{date.year}}-{{date.month}}-{{date.day}}) </i></li>
 {{/notes}}
+</ul>
 {{/groups}}
-End

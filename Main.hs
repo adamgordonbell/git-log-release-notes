@@ -18,3 +18,4 @@ go1 = do
     grp <- return $ group 10 ns
     html <- render "notesGroup.html" grp
     print html
+    writeFile "releaseNotes.html" (show html)

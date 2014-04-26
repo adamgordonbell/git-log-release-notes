@@ -1,5 +1,5 @@
-to write:
-group
+todo:
+write tot file
 
 Fix up:
 more complicated parsing
