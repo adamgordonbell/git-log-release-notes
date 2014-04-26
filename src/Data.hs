@@ -19,6 +19,6 @@ data Note = Note { version :: Version, date :: Date, description :: Text } deriv
 instance Ord Note where
   n1 <= n2 = version n1 <= version n2
 
-data Notes = Notes { notes :: [Note] } deriving (Data, Typeable, Show)
+data Group = Group { from :: Version, to :: Version, notes :: [Note]} deriving (Eq,Show, Data, Typeable)
 
-data Group = Group { from :: Version, to :: Version, list :: [Note]} deriving (Eq,Show, Data, Typeable)
+data Groups = Groups { groups :: [Group] } deriving (Data, Typeable)
