@@ -25,4 +25,5 @@ executable ReleaseNotes
         bytestring,
         attoparsec,
         time,
-        containers
+        containers,
+        cmdargs
