@@ -4,6 +4,7 @@ module ReleaseNotes.Util where
 
 import Data.Monoid
 import Data.Functor
+import Data.Maybe
     
 import ReleaseNotes.Data
 import qualified Data.List
@@ -33,11 +34,17 @@ generateGroups groupSize ns = Data.List.nub $ fmap (range . version) ns
      ceil r = r `div` groupSize * groupSize + groupSize -1
 
 ----------------------------------------------------
-convert :: Line -> Note
-convert (Line d rs t) = Note (convert1 rs) d t
 
-convert1 :: [Ref] -> Version
-convert1 rs = unwrap . firstJusts $ ref1 <$> rs
+convertLines :: [Line] -> [Note]
+convertLines ls = catMaybes $ fmap convertLine ls
+    
+convertLine :: Line -> Maybe Note
+convertLine (Line d rs t) = do
+    v <- convert1 rs
+    return $ Note v d t
+
+convert1 :: [Ref] -> Maybe Version
+convert1 rs = firstJusts $ ref1 <$> rs
 
 ref1 (VersionTag v) = Just v
 ref1 _ = Nothing

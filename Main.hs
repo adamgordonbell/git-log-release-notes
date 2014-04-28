@@ -27,6 +27,10 @@ go1 = do
     Text.writeFile "releaseNotes.html" html
 
 go2 = do 
-      lines <- Parse2.lines "notes_complicated.log"
-      notes <- return $ fmap convert lines
-      putStrLn . show $ notes
+      n <- fmap convertLines $ Parse2.lines "notes_complicated.log"
+      n1 <- fmap convertLines $ Parse2.lines "override_notes.log"
+      ns <-  return $ merge n n1
+      grp <- return $ group 10 ns
+      html <- render "notesGroup.html" grp
+      Text.putStrLn html
+      Text.writeFile "releaseNotes.html" html
