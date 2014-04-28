@@ -12,7 +12,7 @@ import Data.Generics
 -----------------------
 -------- TYPES --------
 -----------------------
-data Date = Date { year :: Int, month :: Int, day :: Int} deriving (Eq,Show, Data, Typeable)
+data Date = Date { year :: Int, month :: Int, day :: Int} deriving (Eq,Show, Data, Typeable, Ord)
 data Version = Version { major :: Int, minor :: Int, build :: Int, revision :: Int} deriving (Eq,Show, Data, Typeable, Ord)
 data Note = Note { version :: Version, date :: Date, description :: Text } deriving (Eq,Show, Data, Typeable)
 
@@ -22,3 +22,9 @@ instance Ord Note where
 data Group = Group { from :: Version, to :: Version, notes :: [Note]} deriving (Eq,Show, Data, Typeable)
 
 data Groups = Groups { groups :: [Group] } deriving (Data, Typeable)
+
+----------------------------
+data Ref = Branch String | VersionTag Version | Tag String deriving (Eq,Show, Data, Typeable, Ord)
+
+data Line = Line Date [Ref] Text deriving (Eq,Show, Data, Typeable, Ord)
+

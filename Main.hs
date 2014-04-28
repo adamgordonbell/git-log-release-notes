@@ -24,4 +24,6 @@ go1 = do
     html <- render "notesGroup.html" grp
     Text.putStrLn  html
     Text.writeFile "releaseNotes.html" html
-    
+
+go2 = do 
+      n <- Parse.notes "notes.log"

@@ -2,6 +2,9 @@
 {-# LANGUAGE NoMonomorphismRestriction #-}
 module ReleaseNotes.Util where
 
+import Data.Monoid
+import Data.Functor
+    
 import ReleaseNotes.Data
 import qualified Data.List
 import qualified Data.Map
@@ -28,3 +31,22 @@ generateGroups groupSize ns = Data.List.nub $ fmap (range . version) ns
      range (Version m1 m2 b r) = Group { from = Version m1 m2 b (floor r), to = Version m1 m2 b (ceil r), notes = []}
      floor r = r `div` groupSize * groupSize
      ceil r = r `div` groupSize * groupSize + groupSize -1
+
+----------------------------------------------------
+convert :: Line -> Note
+convert (Line d rs t) = Note (convert1 rs) d t
+
+convert1 :: [Ref] -> Version
+convert1 rs = unwrap . firstJusts $ ref1 <$> rs
+
+ref1 (VersionTag v) = Just v
+ref1 _ = Nothing
+
+firstJusts = foldr firstJust Nothing
+
+firstJust :: Maybe a -> Maybe a -> Maybe a
+firstJust (Just a) _ = Just a
+firstJust Nothing  b = b
+
+unwrap (Just u) = u
+unwrap _ = error "Nothing"
