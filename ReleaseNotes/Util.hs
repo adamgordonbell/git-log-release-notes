@@ -1,8 +1,8 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE NoMonomorphismRestriction #-}
-module Util where
+module ReleaseNotes.Util where
 
-import Data
+import ReleaseNotes.Data
 import qualified Data.List
 import qualified Data.Map
 

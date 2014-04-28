@@ -1,10 +1,10 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE NoMonomorphismRestriction #-}
 
-import qualified Parse
-import Data
-import Util
-import Render
+import qualified ReleaseNotes.Parse as Parse
+import ReleaseNotes.Data
+import ReleaseNotes.Util
+import ReleaseNotes.Render
 ----------------------
 -------- MAIN --------
 ----------------------

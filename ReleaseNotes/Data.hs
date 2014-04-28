@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE NoMonomorphismRestriction #-}
-module Data where
+module ReleaseNotes.Data where
 
 import Data.Word
 import Data.Time

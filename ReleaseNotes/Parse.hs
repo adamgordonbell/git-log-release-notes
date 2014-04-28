@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE NoMonomorphismRestriction #-}
-module Parse where
+module ReleaseNotes.Parse where
 import Data.Attoparsec.Text
 import Data.Attoparsec.Combinator
 import qualified Data.Attoparsec.Text as Parse
@@ -17,7 +17,7 @@ import qualified Data.Text.Lazy.IO
 import Data.Text.Lazy.Encoding as TE 
 import Control.Monad
 
-import Data
+import ReleaseNotes.Data
 
 -----------------------
 ------- PARSING -------
