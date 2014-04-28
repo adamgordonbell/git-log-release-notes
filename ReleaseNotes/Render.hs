@@ -10,6 +10,6 @@ import qualified Data.Text.Lazy as TL
 
 render :: String -> [Group] -> IO Text
 render template grps = 
-    -- fmap (TL.toStrict . TL.decodeLatin1)  $ 
-    fmap TL.toStrict $ 
+    fmap (TL.toStrict . TL.decodeLatin1)  $ 
+    -- fmap TL.toStrict $ 
     hastacheFile defaultConfig template (mkGenericContext $ Groups grps)
