@@ -81,8 +81,11 @@ anyBetween start ends = start *> Data.Attoparsec.Text.takeWhile (not.flip elem e
 fromUptoIncl startP endChars = startP *> takeTill (flip elem endChars)
 
 -- Test Parse
-testDate = print $ parseOnly dateParser "2013-06-30"
+-- testDate = print $ parseOnly dateParser "2013-06-30"
 
-testVersion = print $ parseOnly versionParser "(tag: VCH3.0.10.206(default))"
+-- testVersion = print $ parseOnly versionParser "(tag: VCH3.0.10.206(default))"
    
-testNotes = print $ parseOnly notesParser "2014-04-17| (tag: VCH3.0.10.206(default))|Subject Line\n2014-04-17| (tag: VCH3.0.10.206(default))|Subject Line\n"
+-- testNotes = print $ parseOnly notesParser "2014-04-17| (tag: VCH3.0.10.206(default))|Subject Line\n2014-04-17| (tag: VCH3.0.10.206(default))|Subject Line\n"
+
+-- exampleTrouble = "(HEAD, tag: VCH3.0.10.218(default), tfs/default, master)"
+-- pointerParser = "(" .*> many1 pointer1Parser <*. ")"
