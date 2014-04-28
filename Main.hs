@@ -5,6 +5,11 @@ import qualified ReleaseNotes.Parse as Parse
 import ReleaseNotes.Data
 import ReleaseNotes.Util
 import ReleaseNotes.Render
+
+import qualified Data.Text as Text
+import qualified Data.Text.IO as Text
+
+
 ----------------------
 -------- MAIN --------
 ----------------------
@@ -17,5 +22,6 @@ go1 = do
     ns <-  return $ merge n n1
     grp <- return $ group 10 ns
     html <- render "notesGroup.html" grp
-    print html
-    writeFile "releaseNotes.html" (show html)
+    Text.putStrLn  html
+    Text.writeFile "releaseNotes.html" html
+    
