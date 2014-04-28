@@ -91,25 +91,10 @@ versionParser1 = do
     revision <- Parse.takeWhile BParse.isDigit
     return $ Version (read . unpack $ major) (read . unpack $  minor) (read . unpack $ build) (read . unpack $ revision)
 
--- data Ref = Branch String | VersionTag Version | Tag String deriving (Eq,Show, Data, Typeable, Ord)
-
 messageParser :: Parser Text
 messageParser = takeTill isEndOfLine
 
-
-anyBetween start ends = start *> Data.Attoparsec.Text.takeWhile (not.flip elem ends)
-fromUptoIncl startP endChars = startP *> takeTill (flip elem endChars)
-
 -- Test Parse
--- testDate = print $ parseOnly dateParser "2013-06-30"
-
--- testVersion = print $ parseOnly versionParser "(tag: VCH3.0.10.206(default))"
-   
--- testNotes = print $ parseOnly notesParser "2014-04-17| (tag: VCH3.0.10.206(default))|Subject Line\n2014-04-17| (tag: VCH3.0.10.206(default))|Subject Line\n"
-
--- exampleTrouble = "(HEAD, tag: VCH3.0.10.218(default), tfs/default, master)"
--- pointerParser = "(" .*> many1 pointer1Parser <*. ")"
-
 testLine = print $ parseOnly lineParser "2014-04-23||javascript redirect to login if 401 returned from ajax"
 
 testRefParser = print $ parseOnly refsParser "(HEAD, tag: VCH3.0.10.218(default), tfs/default, master)"

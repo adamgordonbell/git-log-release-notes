@@ -23,7 +23,6 @@ data Group = Group { from :: Version, to :: Version, notes :: [Note]} deriving (
 
 data Groups = Groups { groups :: [Group] } deriving (Data, Typeable)
 
-----------------------------
 data Ref = Branch String | VersionTag Version | Tag String deriving (Eq,Show, Data, Typeable, Ord)
 
 data Line = Line Date [Ref] Text deriving (Eq,Show, Data, Typeable, Ord)

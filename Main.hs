@@ -12,12 +12,7 @@ import qualified Data.Text as Text
 import qualified Data.Text.IO as Text
 import System.Console.CmdArgs
 
-
-
-----------------------
--------- MAIN --------
-----------------------
-main = go1 --Parse2.testLine -- go2 --Parse.testDate
+main = go1
 
 go1 = do 
       Args{..} <- cmdArgs $ defaultArgs
@@ -37,7 +32,8 @@ data Args = Args {
     template :: String,
     resultFile :: String
     } deriving (Data,Typeable,Show)
-    
+ 
+--These are the defaults
 defaultArgs = Args {
     logs= "notes.log", 
     overrideLogs="override_notes.log", 

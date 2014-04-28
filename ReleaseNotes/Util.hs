@@ -10,6 +10,9 @@ import ReleaseNotes.Data
 import qualified Data.List
 import qualified Data.Map
 
+----------
+-- Merge
+----------
 merge :: [Note] -> [Note] -> [Note]
 merge n1 n2 = fromMap $ Data.Map.union (toMap n2) (toMap n1) 
  where
@@ -17,7 +20,9 @@ merge n1 n2 = fromMap $ Data.Map.union (toMap n2) (toMap n1)
   toMap notes = Data.Map.fromList $ fmap (\x -> (version x, x)) notes
   fromMap :: Data.Map.Map Version Note -> [Note]
   fromMap map = reverse $ Data.Map.elems map
-
+----------
+-- Group
+----------
 group :: Int -> [Note] -> [Group]
 group groupSize ns = fmap (fillGroup ns) (generateGroups groupSize ns)
  
@@ -32,9 +37,9 @@ generateGroups groupSize ns = Data.List.nub $ fmap (range . version) ns
      range (Version m1 m2 b r) = Group { from = Version m1 m2 b (floor r), to = Version m1 m2 b (ceil r), notes = []}
      floor r = r `div` groupSize * groupSize
      ceil r = r `div` groupSize * groupSize + groupSize -1
-
-----------------------------------------------------
-
+----------
+-- Convert
+----------
 convertLines :: [Line] -> [Note]
 convertLines ls = catMaybes $ fmap convertLine ls
     
@@ -55,5 +60,3 @@ firstJust :: Maybe a -> Maybe a -> Maybe a
 firstJust (Just a) _ = Just a
 firstJust Nothing  b = b
 
-unwrap (Just u) = u
-unwrap _ = error "Nothing"
