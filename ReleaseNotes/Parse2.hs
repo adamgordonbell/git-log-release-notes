@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE NoMonomorphismRestriction #-}
-module ReleaseNotes.Parse where
+module ReleaseNotes.Parse2 where
 import Data.Attoparsec.Text
 import Data.Attoparsec.Combinator
 import qualified Data.Attoparsec.Text as Parse
@@ -23,10 +23,10 @@ import ReleaseNotes.Data
 ------- PARSING -------
 -----------------------
 
-notes :: String -> IO [Note]
-notes filepath = do
+lines :: String -> IO [Line]
+lines filepath = do
     text <- getFile filepath
-    return . fromRight $ parseOnly notesParser text
+    return . fromRight $ parseOnly linesParser text
 
 getFile :: String -> IO Text
 getFile fp = Data.Text.Lazy.toStrict <$> Data.Text.Lazy.IO.readFile fp
@@ -36,16 +36,20 @@ fromRight (Left a) = error a
 
 ----------------------------------------------
 
-notesParser :: Parser [Note]
-notesParser = many1 $ noteParser <* endOfLine
+linesParser :: Parser [Line]
+linesParser = many1 $ lineParser <* endOfLine
 
-noteParser :: Parser Note
-noteParser = do
+lineParser :: Parser Line
+lineParser =  
+ do
   d <- dateParser
-  string "| "
-  v <- versionParser
+  string "|"
+  -- Zero or one lists of ref, flattened 
+  -- to handle commits with no refs
+  rs <- many' refsParser
+  string "|"
   s <- messageParser
-  return $ Note v d s
+  return $ Line d (join rs) s
 
 dateParser :: Parser Date
 dateParser = do
@@ -57,9 +61,27 @@ dateParser = do
   return $
     Date (read y) (read mm) (read d)
 
-versionParser :: Parser Version
-versionParser = do
-    header <- asciiCI "(tag: VCH"
+refsParser :: Parser [Ref]
+refsParser = do
+    char ' '
+    char '('
+    refs <- refParser `sepBy` asciiCI ", " -- <* many' (char ',')
+    char ')'
+    return refs
+    
+refParser :: Parser Ref
+refParser = -- undefined
+    versionParser <|>
+    tagParser <|>
+    branchParser
+ where
+     branchParser = fmap Branch $ words
+     versionParser = asciiCI "tag: VCH" *> fmap VersionTag versionParser1 <* asciiCI "(default)"
+     tagParser = asciiCI "tag: " *> fmap Tag words
+     words = many1 $ satisfy (notInClass ",)")
+
+versionParser1 :: Parser Version
+versionParser1 = do
     major <- Parse.takeWhile BParse.isDigit
     char '.'
     minor <- Parse.takeWhile BParse.isDigit
@@ -69,12 +91,10 @@ versionParser = do
     revision <- Parse.takeWhile BParse.isDigit
     return $ Version (read . unpack $ major) (read . unpack $  minor) (read . unpack $ build) (read . unpack $ revision)
 
+-- data Ref = Branch String | VersionTag Version | Tag String deriving (Eq,Show, Data, Typeable, Ord)
 
 messageParser :: Parser Text
-messageParser = 
-    skipWhile (/= '|') 
-    *> skip (== '|') 
-    *> takeTill isEndOfLine
+messageParser = takeTill isEndOfLine
 
 
 anyBetween start ends = start *> Data.Attoparsec.Text.takeWhile (not.flip elem ends)
@@ -89,3 +109,7 @@ fromUptoIncl startP endChars = startP *> takeTill (flip elem endChars)
 
 -- exampleTrouble = "(HEAD, tag: VCH3.0.10.218(default), tfs/default, master)"
 -- pointerParser = "(" .*> many1 pointer1Parser <*. ")"
+
+testLine = print $ parseOnly lineParser "2014-04-23||javascript redirect to login if 401 returned from ajax"
+
+testRefParser = print $ parseOnly refsParser "(HEAD, tag: VCH3.0.10.218(default), tfs/default, master)"
