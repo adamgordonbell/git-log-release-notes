@@ -27,12 +27,11 @@ lines :: String -> IO [Line]
 lines filepath = do
     text <- getFile filepath
     return . fromRight $ parseOnly linesParser text
-
-getFile :: String -> IO Text
-getFile fp = Data.Text.Lazy.toStrict <$> Data.Text.Lazy.IO.readFile fp
-
-fromRight (Right a) = a
-fromRight (Left a) = error a
+  where        
+      getFile :: String -> IO Text
+      getFile fp = Data.Text.Lazy.toStrict <$> Data.Text.Lazy.IO.readFile fp
+      fromRight (Right a) = a
+      fromRight (Left a) = error a
 
 ----------------------------------------------
 
@@ -65,31 +64,34 @@ refsParser :: Parser [Ref]
 refsParser = do
     char ' '
     char '('
-    refs <- refParser `sepBy` asciiCI ", " -- <* many' (char ',')
+    refs <- refParser `sepBy` asciiCI ", "
     char ')'
     return refs
     
 refParser :: Parser Ref
 refParser = -- undefined
-    versionParser <|>
+    versionTagParser <|>
     tagParser <|>
     branchParser
  where
+     versionTagParser = asciiCI "tag: VCH" *> fmap VersionTag versionParser <* asciiCI "(default)"
      branchParser = fmap Branch $ words
-     versionParser = asciiCI "tag: VCH" *> fmap VersionTag versionParser1 <* asciiCI "(default)"
      tagParser = asciiCI "tag: " *> fmap Tag words
      words = many1 $ satisfy (notInClass ",)")
 
-versionParser1 :: Parser Version
-versionParser1 = do
-    major <- Parse.takeWhile BParse.isDigit
+versionParser :: Parser Version
+versionParser = do
+    major <- takeDigits
     char '.'
-    minor <- Parse.takeWhile BParse.isDigit
+    minor <- takeDigits
     char '.'
-    build <- Parse.takeWhile BParse.isDigit
+    build <- takeDigits
     char '.'
-    revision <- Parse.takeWhile BParse.isDigit
-    return $ Version (read . unpack $ major) (read . unpack $  minor) (read . unpack $ build) (read . unpack $ revision)
+    revision <- takeDigits
+    return $ Version (readText major) (readText minor) (readText build) (readText revision)
+  where 
+      takeDigits = Parse.takeWhile BParse.isDigit
+      readText = read. unpack
 
 messageParser :: Parser Text
 messageParser = takeTill isEndOfLine

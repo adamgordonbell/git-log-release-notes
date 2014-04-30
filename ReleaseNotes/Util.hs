@@ -1,5 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE NoMonomorphismRestriction #-}
+
 module ReleaseNotes.Util where
 
 import Data.Monoid
@@ -45,18 +46,17 @@ convertLines ls = catMaybes $ fmap convertLine ls
     
 convertLine :: Line -> Maybe Note
 convertLine (Line d rs t) = do
-    v <- convert1 rs
+    v <- convertRef rs
     return $ Note v d t
 
-convert1 :: [Ref] -> Maybe Version
-convert1 rs = firstJusts $ ref1 <$> rs
-
-ref1 (VersionTag v) = Just v
-ref1 _ = Nothing
-
-firstJusts = foldr firstJust Nothing
-
-firstJust :: Maybe a -> Maybe a -> Maybe a
-firstJust (Just a) _ = Just a
-firstJust Nothing  b = b
-
+convertRef :: [Ref] -> Maybe Version
+convertRef rs = 
+    firstJusts $ 
+    unwrapVersion <$>  rs
+  where
+      unwrapVersion :: Ref -> Maybe Version
+      unwrapVersion r = case r of
+          VersionTag v    -> Just v
+          _               -> Nothing
+      firstJusts :: [Maybe a] -> Maybe a
+      firstJusts = listToMaybe . catMaybes
